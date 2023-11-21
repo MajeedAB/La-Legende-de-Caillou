@@ -1,7 +1,9 @@
+import time
 import pygame
 from Caillou import Caillou
 from Plateforme import Plateforme
 from Image import load_image
+from constants import GAME_HZ
 
 DFLT_IMG_SZ = (1200, 860)
 class Game:
@@ -21,11 +23,27 @@ class Game:
         self.scroll = [0, 0]
         self.tilemap = Plateforme(self)
 
+        self.paused = False
 
 
     def run(self):
-
+        treasure_coords = (1000, 500)
+        treasure_sprite = load_image('treasures/treasure1.png')
+        treasure_size = (50, 50)
+        pause_count = 10
         while True:
+            if self.paused:
+                # Do cutscene / level switch logic
+                pause_count -= 1
+                if pause_count <= 0:
+                    self.paused = False
+                    pause_count = 10
+                self.clock.tick(GAME_HZ)
+                continue
+
+            if self.player.rect().collidepoint(treasure_coords):
+                self.paused = True
+
             # img = pygame.transform.scale(img, DFLT_IMG_SZ)
             self.display.blit(pygame.transform.scale(load_image('player/shesh.png'), DFLT_IMG_SZ), (0, 0))
             
@@ -59,5 +77,6 @@ class Game:
             
 
             self.screen.blit(pygame.transform.scale(self.display, self.screen.get_size()), (0, 0))
+            self.screen.blit(pygame.transform.scale(treasure_sprite, treasure_size), (treasure_coords))
             pygame.display.update()
-            self.clock.tick(60)
+            self.clock.tick(GAME_HZ)
