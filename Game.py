@@ -17,7 +17,7 @@ class Game:
         self.clock = pygame.time.Clock()
 
         self.movement = [False, False]
-        self.player = Caillou((50, 50), (8, 15), self)
+        self.player = Caillou((50, 50), (40, 75), self)
         self.scroll = [0, 0]
         self.tilemap = Plateforme(self)
 

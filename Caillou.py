@@ -2,6 +2,8 @@ import pygame
 from Image import load_image, load_images
 import os
 
+from constants import CAILLOU_ANIMATION_SLOWDOWN
+
 
 class Caillou:
     def __init__(self, pos, size, game):
@@ -51,9 +53,9 @@ class Caillou:
             self.set_action('caillou-idle')
 
         self.animation_frame += 1
-        if(self.animation_frame//3 >= len(self.assets[self.action])):
+        if(self.animation_frame//CAILLOU_ANIMATION_SLOWDOWN >= len(self.assets[self.action])):
             self.animation_frame = 0
-        self.animation = self.assets[self.action][self.animation_frame//3].copy()
+        self.animation = self.assets[self.action][self.animation_frame//CAILLOU_ANIMATION_SLOWDOWN].copy()
 
         if(movement[0] != 0):
             self.flip = movement[0] > 0 # Pour flip les sprites quand Caillou marche a gauche ou a droite

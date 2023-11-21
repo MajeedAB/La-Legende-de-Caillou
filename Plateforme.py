@@ -1,6 +1,7 @@
 import pygame
 from Caillou import Caillou
 from Image import load_image
+from constants import TILE_SIZE
 
 
 NEIGHBOR_OFFSETS = [(-1, 0), (-1, -1), (0, -1), (1, -1), (1, 0), (0, 0), (-1, 1), (0, 1), (1, 1)]
@@ -9,7 +10,7 @@ PHYSICS_TILES = {'grass', 'stone'}
 
 class Plateforme:
 
-    def __init__(self, game, tile_size=25):
+    def __init__(self, game, tile_size=TILE_SIZE):
         self.game = game
         self.tile_size = tile_size
         self.tilemap = {}
@@ -41,8 +42,8 @@ class Plateforme:
 
     def render(self, surf, offset=(0, 0)):
         for tile in self.offgrid_tiles:
-            surf.blit(pygame.transform.scale(load_image('player/shesh.png'), (25,25)), (tile['pos'][0], tile['pos'][1]))
+            surf.blit(pygame.transform.scale(load_image('player/shesh.png'), (self.tile_size, self.tile_size)), (tile['pos'][0], tile['pos'][1]))
         for loc in self.tilemap:
             tile = self.tilemap[loc]
-            surf.blit(pygame.transform.scale(load_image('player/shesh.png'), (25,25)), (tile['pos'][0] * self.tile_size, tile['pos'][1] * self.tile_size))
+            surf.blit(pygame.transform.scale(load_image('player/shesh.png'), (self.tile_size, self.tile_size)), (tile['pos'][0] * self.tile_size, tile['pos'][1] * self.tile_size))
 
