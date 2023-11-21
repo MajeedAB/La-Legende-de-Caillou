@@ -2,7 +2,7 @@ import pygame
 from Image import load_image, load_images
 import os
 
-from constants import CAILLOU_ANIMATION_SLOWDOWN
+from constants import CAILLOU_ANIMATION_SLOWDOWN, CAILLOU_GRAVITATIONAL_ACCEL, CAILLOU_JUMPING_SPEED, CAILLOU_SPEED
 
 
 class Caillou:
@@ -41,9 +41,9 @@ class Caillou:
 
     def update(self, tilemap, movement=(0, 0)):
         self.collisions = {'up': False, 'down': False, 'right': False, 'left': False}
-        self.frame_movement = (movement[0] + self.velocity[0], movement[1] + self.velocity[1])
+        self.frame_movement = ((movement[0] + self.velocity[0]) * CAILLOU_SPEED, (movement[1] + self.velocity[1]) * CAILLOU_JUMPING_SPEED)
         self.detectObjectsColliding(tilemap)
-        self.velocity[1] = min(5, self.velocity[1] + 0.1)
+        self.velocity[1] = min(5, self.velocity[1] + 0.1 * CAILLOU_GRAVITATIONAL_ACCEL)
         if self.collisions['down'] or self.collisions['up']:
             self.velocity[1] = 0
 
