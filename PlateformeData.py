@@ -1,6 +1,8 @@
 
 import math
 
+from constants import TILE_SIZE
+
 TILE_OFFSET_X = -10
 TILE_OFFSET_Y = -8
 
@@ -29,6 +31,8 @@ def set_tiles_1(game):
     # add_line(tile_list, (2, 5), (8, 2))
     # add_line(tile_list, (-5, 3), (-10, 2))
     # add_rect(tile_list, (-5, 3), (8, 10))
+    game.treasure_coords[0] = 15
+    game.treasure_coords[1] = -20
     tile_matrix = [
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
@@ -53,12 +57,13 @@ def set_tiles_1(game):
         for j,el in enumerate(l):
             if(el == 0):
                 continue
-            if(el == -2):
-                game.treasure_coords = (j + TILE_OFFSET_X, i + TILE_OFFSET_Y)
+            elif(el == -2):
+                game.treasure_coords[0] = (j + TILE_OFFSET_X) * TILE_SIZE
+                game.treasure_coords[1] = (i + TILE_OFFSET_Y) * TILE_SIZE
                 continue
-            if(el == -1):
-                game.player.pos[0] = j + TILE_OFFSET_X
-                game.player.pos[1] = i + TILE_OFFSET_Y
+            elif(el == -1):
+                game.player.pos[0] = (j + TILE_OFFSET_X) * TILE_SIZE
+                game.player.pos[1] = (i + TILE_OFFSET_Y) * TILE_SIZE
                 continue
             key = str(j + TILE_OFFSET_X) + ';' + str(i + TILE_OFFSET_Y)
             variant = el-1

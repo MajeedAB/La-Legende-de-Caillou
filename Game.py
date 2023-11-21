@@ -16,6 +16,7 @@ class Game:
         pygame.init()
         pygame.display.set_caption('La Legende de Caillou')
 
+        self.treasure_coords = [0, 0]
         self.level = 1
         self.screen = pygame.display.set_mode(DFLT_IMG_SZ)
 
@@ -27,12 +28,11 @@ class Game:
         self.player = Caillou(get_caillou_start_pos(self.level), (40, 75), self)
         self.scroll = [self.player.rect().centerx - self.display.get_width() / 2, self.player.rect().centery - self.display.get_height() / 2]
         self.plateforme = Plateforme(self)
-        set_tiles_data_level(self, self.level)
 
         self.treasure_found = False
-        # self.treasure_coords = get_treasure_coords(self.level)
         self.treasure_sprite = get_treasure_sprite(self.level)
         self.treasure_size = (40, 60)
+        set_tiles_data_level(self, self.level)
 
         self.bg_image = get_level_background(self.level).convert()
         self.bg_image.set_colorkey((1, 2, 3))
@@ -58,7 +58,7 @@ class Game:
         self.bg_image.set_colorkey((1, 2, 3))
 
         set_tiles_data_level(self, self.level)
-        self.plateforme.tile_images = get_tile_sprites(self.level)
+        self.plateforme.tile_images = get_tile_sprites()
 
     def run(self):
         cinematique_0(self.screen, self.display, self.clock)
