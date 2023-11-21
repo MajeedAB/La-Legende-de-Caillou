@@ -1,6 +1,6 @@
 import pygame
 
-from Character import Caillou
+from Caillou import Caillou
 
 
 NEIGHBOR_OFFSETS = [(-1, 0), (-1, -1), (0, -1), (1, -1), (1, 0), (0, 0), (-1, 1), (0, 1), (1, 1)]

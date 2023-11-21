@@ -1,6 +1,6 @@
 import pygame
 import sys
-from Character import Caillou
+from Caillou import Caillou
 from Game import Game
 
 def main():

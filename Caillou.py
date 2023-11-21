@@ -26,7 +26,7 @@ class Caillou:
     def set_action(self, action):
         if action != self.action:
             self.action = action
-            self.animation = self.game.assets['./sprites/' + self.action + '/' + self.anim_count].copy()
+            # self.animation = self.game.assets['./sprites/' + self.action + '/' + self.anim_count].copy()
 
     def update(self, tilemap, movement=(0, 0)):
         self.collisions = {'up': False, 'down': False, 'right': False, 'left': False}
@@ -67,27 +67,4 @@ class Caillou:
                 if self.frame_movement[1] < 0:
                     entity_rect.top = rect.bottom
                     self.collisions['up'] = True
-<<<<<<< HEAD:Character/Caillou.py
                 self.pos[1] = entity_rect.y
-=======
-                self.pos[1] = entity_rect.y
-        
-        self.velocity[1] = min(5, self.velocity[1] + 0.1)
-        
-        if self.collisions['down'] or self.collisions['up']:
-            self.velocity[1] = 0
-
-        if self.collisions['down']:
-            self.air_time = 0
-            
-        if movement[0] != 0:
-            self.set_action('caillou-run')
-        else:
-            self.set_action('caillou-idle')
-
-        self.anim_count += 1
-            
-    def rect(self):
-        return pygame.Rect(self.pos[0], self.pos[1], self.size[0], self.size[1])
-    
->>>>>>> 91bd95727f647c9dc0c151783131536eac177b86:Caillou.py
