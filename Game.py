@@ -22,7 +22,7 @@ class Game:
 
         self.movement = [False, False]
         self.player = Caillou(get_caillou_start_pos(self.level), (40, 75), self)
-        self.scroll = [0, 0]
+        self.scroll = [self.player.rect().centerx - self.display.get_width() / 2, self.player.rect().centery - self.display.get_height() / 2]
         self.tilemap = Plateforme(self)
 
         self.treasure_found = False
@@ -39,6 +39,9 @@ class Game:
         self.treasure_coords[1] = get_treasure_coords(self.level)[1]
         self.player.pos[0] = get_caillou_start_pos(self.level)[0]
         self.player.pos[1] = get_caillou_start_pos(self.level)[1]
+        self.scroll = [self.player.rect().centerx - self.display.get_width() / 2, self.player.rect().centery - self.display.get_height() / 2]
+        self.render_scroll = (int(self.scroll[0]), int(self.scroll[1]))
+            
         self.player.velocity[0] = 0
         self.player.velocity[1] = 0
         self.clock.tick(1)
@@ -85,6 +88,6 @@ class Game:
             
 
             self.screen.blit(pygame.transform.scale(self.display, self.screen.get_size()), (0, 0))
-            self.screen.blit(pygame.transform.scale(self.treasure_sprite, self.treasure_size), (self.treasure_coords))
+            self.screen.blit(pygame.transform.scale(self.treasure_sprite, self.treasure_size), (self.treasure_coords[0] - render_scroll[0], self.treasure_coords[1] - render_scroll[1]))
             pygame.display.update()
             self.clock.tick(GAME_HZ)

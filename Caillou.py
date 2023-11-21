@@ -33,7 +33,7 @@ class Caillou:
         else:
             animation_frame = self.animation
         animation_frame = pygame.transform.scale(animation_frame, self.size)
-        surf.blit(animation_frame, self.pos)
+        surf.blit(animation_frame, (self.pos[0] - offset[0], self.pos[1] - offset[1]))
 
     def set_action(self, action):
         if action != self.action:
