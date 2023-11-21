@@ -20,6 +20,7 @@ class Caillou:
         self.size = size
         self.frame_movement = 0   
         self.anim_count = 0
+        self.on_floor = False
 
         self.action = ''
         self.anim_offset = (-3, -3)
