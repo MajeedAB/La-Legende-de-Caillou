@@ -8,10 +8,21 @@ class Caillou:
         self.velocity = [0,0]
         self.collisions = {'up': False, 'down': False, 'right': False, 'left': False}
         self.size = size
+        self.anim_count = 0
+
+        self.action = ''
+        self.anim_offset = (-3, -3)
+        self.flip = False
+        self.set_action('caillou-idle')
 
     def render(self, surf, offset=(0, 0)):
         pygame.Rect(self.pos[0], self.pos[1], self.size[0], self.size[1])
         surf.blit(load_image('player/shesh.png'), (self.pos[0], self.pos[1]))
+
+    def set_action(self, action):
+        if action != self.action:
+            self.action = action
+            self.animation = self.game.assets['./sprites/' + self.action + '/' + self.anim_count].copy()
 
     def update(self, tilemap, movement=(0, 0)):
         self.collisions = {'up': False, 'down': False, 'right': False, 'left': False}
@@ -46,6 +57,16 @@ class Caillou:
         
         if self.collisions['down'] or self.collisions['up']:
             self.velocity[1] = 0
+
+        if self.collisions['down']:
+            self.air_time = 0
+            
+        if movement[0] != 0:
+            self.set_action('caillou-run')
+        else:
+            self.set_action('caillou-idle')
+
+        self.anim_count += 1
             
     def rect(self):
         return pygame.Rect(self.pos[0], self.pos[1], self.size[0], self.size[1])
