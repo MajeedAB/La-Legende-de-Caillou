@@ -27,7 +27,7 @@ class Game:
 
 
     def run(self):
-        treasure_coords = (1000, 500)
+        treasure_coords = (500, 500)
         treasure_sprite = load_image('treasures/treasure1.png')
         treasure_size = (50, 50)
         pause_count = 10
@@ -41,7 +41,7 @@ class Game:
                 self.clock.tick(GAME_HZ)
                 continue
 
-            if self.player.rect().collidepoint(treasure_coords):
+            if self.player.rect().colliderect(pygame.Rect(treasure_coords[0], treasure_coords[1], treasure_size[0], treasure_size[1])):
                 self.paused = True
 
             # img = pygame.transform.scale(img, DFLT_IMG_SZ)
