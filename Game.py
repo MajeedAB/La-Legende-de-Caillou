@@ -1,6 +1,7 @@
 import time
 import pygame
 from Caillou import Caillou
+from LevelAssets import get_caillou_start_pos, get_level_background, get_treasure_coords, get_treasure_sprite
 from Plateforme import Plateforme
 from Image import load_image
 from constants import GAME_HZ
@@ -12,6 +13,7 @@ class Game:
         pygame.init()
         pygame.display.set_caption('La Legende de Caillou')
 
+        self.level = 1
         self.screen = pygame.display.set_mode(DFLT_IMG_SZ)
 
         self.display = pygame.Surface(DFLT_IMG_SZ)
@@ -19,33 +21,39 @@ class Game:
         self.clock = pygame.time.Clock()
 
         self.movement = [False, False]
-        self.player = Caillou((50, 50), (40, 75), self)
+        self.player = Caillou(get_caillou_start_pos(self.level), (40, 75), self)
         self.scroll = [0, 0]
         self.tilemap = Plateforme(self)
 
-        self.paused = False
+        self.treasure_found = False
+        self.treasure_coords = get_treasure_coords(self.level)
+        self.treasure_sprite = get_treasure_sprite(self.level)
+        self.treasure_size = (40, 60)
 
+    def next_level(self):
+        # Do cutscene / level switch logic
+        self.level += 1
+        self.treasure_found = False
+        self.treasure_sprite = get_treasure_sprite(self.level)
+        self.treasure_coords[0] = get_treasure_coords(self.level)[0]
+        self.treasure_coords[1] = get_treasure_coords(self.level)[1]
+        self.player.pos[0] = get_caillou_start_pos(self.level)[0]
+        self.player.pos[1] = get_caillou_start_pos(self.level)[1]
+        self.player.velocity[0] = 0
+        self.player.velocity[1] = 0
+        self.clock.tick(1)
 
     def run(self):
-        treasure_coords = (500, 500)
-        treasure_sprite = load_image('treasures/treasure1.png')
-        treasure_size = (50, 50)
-        pause_count = 10
         while True:
-            if self.paused:
-                # Do cutscene / level switch logic
-                pause_count -= 1
-                if pause_count <= 0:
-                    self.paused = False
-                    pause_count = 10
-                self.clock.tick(GAME_HZ)
+            if self.treasure_found:
+                self.next_level()
                 continue
 
-            if self.player.rect().colliderect(pygame.Rect(treasure_coords[0], treasure_coords[1], treasure_size[0], treasure_size[1])):
-                self.paused = True
+            if self.player.rect().collidepoint((self.treasure_coords[0] + self.treasure_size[0]/2, self.treasure_coords[1] + self.treasure_size[1]/2)):
+                self.treasure_found = True
 
             # img = pygame.transform.scale(img, DFLT_IMG_SZ)
-            self.display.blit(pygame.transform.scale(load_image('player/shesh.png'), DFLT_IMG_SZ), (0, 0))
+            self.display.blit(pygame.transform.scale(get_level_background(self.level), DFLT_IMG_SZ), (0, 0))
             
             self.scroll[0] += (self.player.rect().centerx - self.display.get_width() / 2 - self.scroll[0]) / 30
             self.scroll[1] += (self.player.rect().centery - self.display.get_height() / 2 - self.scroll[1]) / 30
@@ -77,6 +85,6 @@ class Game:
             
 
             self.screen.blit(pygame.transform.scale(self.display, self.screen.get_size()), (0, 0))
-            self.screen.blit(pygame.transform.scale(treasure_sprite, treasure_size), (treasure_coords))
+            self.screen.blit(pygame.transform.scale(self.treasure_sprite, self.treasure_size), (self.treasure_coords))
             pygame.display.update()
             self.clock.tick(GAME_HZ)
