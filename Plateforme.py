@@ -9,7 +9,7 @@ PHYSICS_TILES = {'grass', 'stone'}
 
 class Plateforme:
 
-    def __init__(self, game, tile_size=16):
+    def __init__(self, game, tile_size=25):
         self.game = game
         self.tile_size = tile_size
         self.tilemap = {}
@@ -41,9 +41,8 @@ class Plateforme:
 
     def render(self, surf, offset=(0, 0)):
         for tile in self.offgrid_tiles:
-            surf.blit(load_image('player/shesh.png'), (tile['pos'][0] - offset[0], tile['pos'][1] - offset[1]))
-
+            surf.blit(pygame.transform.scale(load_image('player/shesh.png'), (25,25)), (tile['pos'][0], tile['pos'][1]))
         for loc in self.tilemap:
             tile = self.tilemap[loc]
-            surf.blit(load_image('player/shesh.png'), (tile['pos'][0] * self.tile_size - offset[0], tile['pos'][1] * self.tile_size - offset[1]))
+            surf.blit(pygame.transform.scale(load_image('player/shesh.png'), (25,25)), (tile['pos'][0] * self.tile_size, tile['pos'][1] * self.tile_size))
 

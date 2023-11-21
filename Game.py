@@ -19,7 +19,7 @@ class Game:
         self.movement = [False, False]
         self.player = Caillou((50, 50), (8, 15))
         self.scroll = [0, 0]
-        self.tilemap = Plateforme(self, tile_size=16)
+        self.tilemap = Plateforme(self)
 
 
 

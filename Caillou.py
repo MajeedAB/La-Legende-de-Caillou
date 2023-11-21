@@ -18,11 +18,9 @@ class Caillou:
         self.set_action('caillou-idle')
 
     def render(self, surf, offset=(0, 0)):
-
         pygame.Rect(self.pos[0], self.pos[1], self.size[0], self.size[1])
-
-        surf.blit(load_image('player/shesh.png'), (self.pos[0], self.pos[1]))
-
+        surf.blit(pygame.transform.scale(load_image('player/shesh.png'), self.size), (self.pos[0], self.pos[1]))
+# pygame.transform.scale(load_image('player/shesh.png'), (25,25))
     def set_action(self, action):
         if action != self.action:
             self.action = action
