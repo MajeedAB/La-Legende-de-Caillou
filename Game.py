@@ -1,6 +1,7 @@
 import time
 import pygame
 from Caillou import Caillou
+from Cinematique import cinematique_0
 from LevelAssets import get_caillou_start_pos, get_level_background, get_treasure_coords, get_treasure_sprite
 from Plateforme import Plateforme
 from Image import load_image
@@ -47,6 +48,7 @@ class Game:
         self.clock.tick(1)
 
     def run(self):
+        cinematique_0(self.screen, self.display, self.clock)
         while True:
             if self.treasure_found:
                 self.next_level()
