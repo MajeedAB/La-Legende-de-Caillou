@@ -3,8 +3,7 @@ from Image import load_image
 
 
 class Caillou:
-    def __init__(self, pos, size, game):
-        self.game = game
+    def __init__(self, pos, size):
         self.name = "Caillou"
         self.pos = list(pos)
         self.velocity = [0,0]

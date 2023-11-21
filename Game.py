@@ -1,21 +1,23 @@
 import pygame
 from Caillou import Caillou
 from Plateforme import Plateforme
+from Image import load_image
 
+DFLT_IMG_SZ = (1200, 860)
 class Game:
 
     def __init__(self):
         pygame.init()
         pygame.display.set_caption('La Legende de Caillou')
 
-        self.screen = pygame.display.set_mode((640, 480))
+        self.screen = pygame.display.set_mode(DFLT_IMG_SZ)
 
-        self.display = pygame.Surface((320, 240))
+        self.display = pygame.Surface(DFLT_IMG_SZ)
 
         self.clock = pygame.time.Clock()
 
         self.movement = [False, False]
-        self.player = Caillou((50, 50), (8, 15), self)
+        self.player = Caillou((50, 50), (8, 15))
         self.scroll = [0, 0]
         self.tilemap = Plateforme(self, tile_size=16)
 
@@ -24,10 +26,14 @@ class Game:
     def run(self):
 
         while True:
+            # img = pygame.transform.scale(img, DFLT_IMG_SZ)
+            self.display.blit(pygame.transform.scale(load_image('player/shesh.png'), DFLT_IMG_SZ), (0, 0))
+            
             self.scroll[0] += (self.player.rect().centerx - self.display.get_width() / 2 - self.scroll[0]) / 30
             self.scroll[1] += (self.player.rect().centery - self.display.get_height() / 2 - self.scroll[1]) / 30
             render_scroll = (int(self.scroll[0]), int(self.scroll[1]))
-
+            
+            self.tilemap.render(self.display, offset=render_scroll)
             self.player.update(self.tilemap, (self.movement[1] - self.movement[0], 0))
             self.player.render(self.display, offset=render_scroll)
             
