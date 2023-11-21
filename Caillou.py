@@ -1,9 +1,15 @@
 import pygame
-from Image import load_image
+from Image import load_image, load_images
+import os
 
 
 class Caillou:
     def __init__(self, pos, size, game):
+        self.animation_frame = 0
+        self.assets = {
+            'caillou-idle': load_images('./caillou-idle'),
+            'caillou-run': load_images('./caillou-run')
+        }
         self.game = game
         self.name = "Caillou"
         self.pos = list(pos)
@@ -19,15 +25,16 @@ class Caillou:
         self.set_action('caillou-idle')
 
     def render(self, surf, offset=(0, 0)):
-
         pygame.Rect(self.pos[0], self.pos[1], self.size[0], self.size[1])
-
-        surf.blit(load_image('player/shesh.png'), (self.pos[0], self.pos[1]))
+        if(self.flip):
+            animation_frame = pygame.transform.flip(self.animation, True, False)
+        else:
+            animation_frame = self.animation
+        surf.blit(animation_frame, (self.pos[0], self.pos[1]))
 
     def set_action(self, action):
         if action != self.action:
             self.action = action
-            # self.animation = self.game.assets['./sprites/' + self.action + '/' + self.anim_count].copy()
 
     def update(self, tilemap, movement=(0, 0)):
         self.collisions = {'up': False, 'down': False, 'right': False, 'left': False}
@@ -36,6 +43,20 @@ class Caillou:
         self.velocity[1] = min(5, self.velocity[1] + 0.1)
         if self.collisions['down'] or self.collisions['up']:
             self.velocity[1] = 0
+
+        if movement[0] != 0:
+            self.set_action('caillou-run')
+        else:
+            self.set_action('caillou-idle')
+
+        self.animation_frame += 1
+        if(self.animation_frame//3 >= len(self.assets[self.action])):
+            self.animation_frame = 0
+        self.animation = self.assets[self.action][self.animation_frame//3].copy()
+
+        if(movement[0] != 0):
+            self.flip = movement[0] > 0 # Pour flip les sprites quand Caillou marche a gauche ou a droite
+
             
     def rect(self):
         return pygame.Rect(self.pos[0], self.pos[1], self.size[0], self.size[1])
