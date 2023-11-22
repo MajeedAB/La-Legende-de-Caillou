@@ -1,5 +1,1 @@
 pygame
-os
-sys
-time
-math
