@@ -25,7 +25,7 @@ class Game:
         self.clock = pygame.time.Clock()
 
         self.movement = [False, False]
-        self.player = Caillou(get_caillou_start_pos(self.level), (38, 70), self)
+        self.player = Caillou(get_caillou_start_pos(self.level), (36, 70), self)
         self.plateforme = Plateforme(self)
         self.plateforme.tile_images = get_tile_sprites()
 
