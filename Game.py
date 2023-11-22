@@ -2,7 +2,7 @@ import sys
 import time
 import pygame
 from Caillou import Caillou
-from Cinematique import cinematique_0, cinematique_1
+from Cinematique import cinematique_0, cinematique_1, cinematique_2
 from LevelAssets import get_caillou_start_pos, get_level_background, get_tile_sprites, get_treasure_coords, get_treasure_sprite
 from Plateforme import Plateforme
 from Image import load_image
@@ -42,6 +42,8 @@ class Game:
         # Do cutscene / level switch logic
         if(self.level == 1):
             cinematique_1(self.screen, self.display, self.clock)
+        elif(self.level == 3):
+            cinematique_2(self.screen, self.display, self.clock)            
         self.level += 1
         self.treasure_found = False
         self.treasure_sprite = get_treasure_sprite(self.level)
