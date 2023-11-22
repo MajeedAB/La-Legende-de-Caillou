@@ -26,8 +26,8 @@ class Game:
 
         self.movement = [False, False]
         self.player = Caillou(get_caillou_start_pos(self.level), (40, 75), self)
-        self.scroll = [self.player.rect().centerx - self.display.get_width() / 2, self.player.rect().centery - self.display.get_height() / 2]
         self.plateforme = Plateforme(self)
+        self.plateforme.tile_images = get_tile_sprites()
 
         self.treasure_found = False
         self.treasure_sprite = get_treasure_sprite(self.level)
@@ -36,6 +36,7 @@ class Game:
 
         self.bg_image = get_level_background(self.level).convert()
         self.bg_image.set_colorkey((1, 2, 3))
+        self.scroll = [self.player.rect().centerx - self.display.get_width() / 2, self.player.rect().centery - self.display.get_height() / 2]
 
 
     def next_level(self):
@@ -51,8 +52,6 @@ class Game:
         # self.treasure_coords[1] = get_treasure_coords(self.level)[1]
         # self.player.pos[0] = get_caillou_start_pos(self.level)[0]
         # self.player.pos[1] = get_caillou_start_pos(self.level)[1]
-        self.scroll = [self.player.rect().centerx - self.display.get_width() / 2, self.player.rect().centery - self.display.get_height() / 2]
-        self.render_scroll = (int(self.scroll[0]), int(self.scroll[1]))
             
         self.player.velocity[0] = 0
         self.player.velocity[1] = 0
@@ -62,7 +61,8 @@ class Game:
         self.bg_image.set_colorkey((1, 2, 3))
 
         set_tiles_data_level(self, self.level)
-        self.plateforme.tile_images = get_tile_sprites()
+        self.scroll = [self.player.rect().centerx - self.display.get_width() / 2, self.player.rect().centery - self.display.get_height() / 2]
+        self.render_scroll = (int(self.scroll[0]), int(self.scroll[1]))
 
     def run(self):
         cinematique_0(self.screen, self.display, self.clock)
@@ -97,8 +97,9 @@ class Game:
                         self.movement[0] = True
                     if event.key == pygame.K_RIGHT:
                         self.movement[1] = True
-                    if event.key == pygame.K_UP:
+                    if event.key == pygame.K_UP and self.player.jump_ready:
                         self.player.velocity[1] = -3
+                        self.player.jump_ready = False
 
                 if event.type == pygame.KEYUP:
                     if event.key == pygame.K_LEFT:
