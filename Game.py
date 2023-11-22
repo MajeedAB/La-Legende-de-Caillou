@@ -31,7 +31,7 @@ class Game:
 
         self.treasure_found = False
         self.treasure_sprite = get_treasure_sprite(self.level)
-        self.treasure_size = (40, 60)
+        self.treasure_size = (50, 75)
         set_tiles_data_level(self, self.level)
 
         self.bg_image = get_level_background(self.level).convert()
