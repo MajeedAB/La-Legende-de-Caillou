@@ -20,7 +20,7 @@ class Caillou:
         self.size = size
         self.frame_movement = 0   
         self.anim_count = 0
-        self.on_floor = False
+        self.jump_ready = False
 
         self.action = ''
         self.anim_offset = (-3, -3)
@@ -47,6 +47,8 @@ class Caillou:
         self.velocity[1] = min(5, self.velocity[1] + 0.1 * CAILLOU_GRAVITATIONAL_ACCEL)
         if self.collisions['down'] or self.collisions['up']:
             self.velocity[1] = 0
+        if self.collisions['down']:
+            self.jump_ready = True
 
         if movement[0] != 0:
             self.set_action('caillou-run')
