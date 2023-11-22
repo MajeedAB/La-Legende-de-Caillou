@@ -8,7 +8,7 @@ def get_treasure_sprite(level):
     return load_image('treasures/treasure' + str(level) + '.png')
 
 def get_tile_sprites():
-    return [
+    sprites = [
         load_image('platforms/p0.png'),
         load_image('platforms/p1.png'),
         load_image('platforms/p2.png'),
@@ -23,6 +23,10 @@ def get_tile_sprites():
         # load_image('platforms/p11.png'),
         # load_image('platforms/p12.png'),
         ]
+    
+    sprites[5].set_colorkey((1, 2, 3))
+
+    return sprites
 
 caillou_start_pos = [
     (0, 0),
