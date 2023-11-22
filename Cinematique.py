@@ -28,7 +28,7 @@ def cinematique_1(screen, display, clock):
         img.set_colorkey((45, 73, 255))
         screen.blit(pygame.transform.scale(img, screen.get_size()), (0, 0))
         pygame.display.update()
-        clock.tick(0.5)
+        clock.tick(0.35)
 
 def cinematique_2(screen, display, clock):
     for i in range (NUMBER_OF_IMAGES_CUTSCENE_2):
@@ -36,7 +36,7 @@ def cinematique_2(screen, display, clock):
         img.set_colorkey((45, 73, 255))
         screen.blit(pygame.transform.scale(img, screen.get_size()), (0, 0))
         pygame.display.update()
-        clock.tick(0.5)
+        clock.tick(0.35)
 
 def cinematique_3(screen, display, clock):
     for i in range (NUMBER_OF_IMAGES_CUTSCENE_3):
@@ -44,4 +44,4 @@ def cinematique_3(screen, display, clock):
         img.set_colorkey((45, 73, 255))
         screen.blit(pygame.transform.scale(img, screen.get_size()), (0, 0))
         pygame.display.update()
-        clock.tick(0.5)
+        clock.tick(0.35)
